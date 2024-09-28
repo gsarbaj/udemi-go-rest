@@ -1,0 +1,9 @@
+PUT http://localhost:8080/actions/2
+content-type: application/json
+
+{
+  "Name": "Test Action Updated",
+  "Description": "Test Action description Updated",
+  "Location": "Test location updated",
+  "DateTime": "2025-06-03T15:35:00.000Z"
+}

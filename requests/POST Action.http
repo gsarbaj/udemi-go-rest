@@ -1,0 +1,9 @@
+POST http://localhost:8080/actions
+content-type: application/json
+
+{
+  "Name": "Test Action",
+  "Description": "Test Action description",
+  "Location": "Test location",
+  "DateTime": "2025-05-03T15:35:00.000Z"
+}
