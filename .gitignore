@@ -85,6 +85,9 @@ go.work
 # .idea/modules
 # *.iml
 # *.ipr
+.idea/
+.idea
+/.idea/
 
 # CMake
 cmake-build-*/
