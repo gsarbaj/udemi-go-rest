@@ -1,5 +1,6 @@
-PUT http://localhost:8080/actions/2
+PUT http://localhost:8080/actions/11
 content-type: application/json
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imcuc2FyYmFqQGljbG91ZC5jb20iLCJleHAiOjE3MzEzMjgzMTksInVzZXJJZCI6Mn0.V619NmBZhpSCpGbrVEo3DVZiHdVf9zhlovwGCh8E6aI
 
 {
   "Name": "Test Action Updated",

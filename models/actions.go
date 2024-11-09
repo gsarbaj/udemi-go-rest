@@ -12,12 +12,12 @@ type Action struct {
 	Description string    `binding:"required"`
 	Location    string    `binding:"required"`
 	DateTime    time.Time `binding:"required"`
-	UserID      int
+	UserID      int64
 }
 
-var actions []Action = []Action{}
+var actions []Action
 
-func (action Action) Save() error {
+func (action *Action) Save() error {
 	// TODO: add action to a database
 
 	query := `INSERT INTO actions(name, description, location, dateTime, user_id)
@@ -102,5 +102,18 @@ func (action Action) DeleteAction() error {
 	}
 	defer stmt.Close()
 	_, err = stmt.Exec(action.ID)
+	return err
+}
+
+func (a Action) RegisterAction(userID int64) error {
+	query := "INSERT INTO registrations(event_id, user_id) VALUES (?, ?)"
+	stmt, err := db.DB.Prepare(query)
+	if err != nil {
+		return err
+	}
+
+	defer stmt.Close()
+	_, err = stmt.Exec(a.ID, userID)
+
 	return err
 }

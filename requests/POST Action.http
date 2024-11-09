@@ -1,9 +1,10 @@
 POST http://localhost:8080/actions
 content-type: application/json
+authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imcuc2FyYmFqQGljbG91ZC5jb20iLCJleHAiOjE3MzEzMjgzMTksInVzZXJJZCI6Mn0.V619NmBZhpSCpGbrVEo3DVZiHdVf9zhlovwGCh8E6aI
 
 {
-  "Name": "Test Action",
-  "Description": "Test Action description",
+  "Name": "Test Action User3",
+  "Description": "Test Action description User3",
   "Location": "Test location",
   "DateTime": "2025-05-03T15:35:00.000Z"
 }

@@ -1,0 +1,7 @@
+POST localhost:8080/login
+content-type: application/json
+
+{
+  "email": "g.sarbaj@icloud.com",
+  "password": "Hello123"
+}

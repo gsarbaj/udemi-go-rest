@@ -30,14 +30,15 @@ func GetAction(context *gin.Context) {
 }
 
 func CreateAction(context *gin.Context) {
+
 	var action models.Action
 	err := context.ShouldBindJSON(&action)
 	if err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
 
-	action.ID = 1
-	action.UserID = 1
+	userId := context.GetInt64("userId")
+	action.UserID = userId
 
 	err = action.Save()
 	if err != nil {
@@ -54,12 +55,20 @@ func UpdateAction(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	_, err = models.GetActionByID(actionId)
+
+	userId := context.GetInt64("userId")
+	action, err := models.GetActionByID(actionId)
 
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+
+	if action.UserID != userId {
+		context.JSON(http.StatusForbidden, gin.H{"error": "You can't modify your own action"})
+		return
+	}
+
 	var updatedAction models.Action
 	err = context.ShouldBindJSON(&updatedAction)
 
@@ -84,9 +93,17 @@ func DeleteAction(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	userId := context.GetInt64("userId")
 	action, err := models.GetActionByID(actionId)
+
 	if err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	if action.UserID != userId {
+		context.JSON(http.StatusForbidden, gin.H{"error": "You can't delete not your own action"})
 		return
 	}
 

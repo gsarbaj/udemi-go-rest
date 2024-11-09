@@ -1,6 +1,9 @@
 package routes
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+	"imta.icu/rest/middleware"
+)
 
 func RegisterRoutes(server *gin.Engine) {
 	server.GET("/", GetHello)
@@ -10,9 +13,17 @@ func RegisterRoutes(server *gin.Engine) {
 
 	server.GET("/actions", GetActions)
 	server.GET("/actions/:id", GetAction)
-	server.POST("/actions", CreateAction)
-	server.PUT("/actions/:id", UpdateAction)
-	server.DELETE("actions/:id", DeleteAction)
+
+	//protected routes
+
+	authenticated := server.Group("/")
+	authenticated.Use(middleware.Authenticate)
+	authenticated.POST("/actions", CreateAction)
+	authenticated.PUT("/actions/:id", UpdateAction)
+	authenticated.DELETE("actions/:id", DeleteAction)
+	authenticated.POST("actions/:id/register", registerForEvent)
+	authenticated.DELETE("actions/:id/register")
+
 	server.POST("/signup", signUpHandler)
-	server.POST("/login")
+	server.POST("/login", login)
 }
